@@ -57,3 +57,5 @@ docs/_build/
 target/
 
 venv/
+.secret_key
+.postgres_passwd

@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# create this file in the root directory of the project and fill it with the PK
 with open('./.secret_key') as f:
     SECRET_KEY = f.read().strip()
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'toulousecommuter',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -74,8 +75,11 @@ WSGI_APPLICATION = 'toulousecommute.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+
+# create this file in the root directory of the project and fill it with the DB password
 with open('./.postgres_passwd') as f:
     PASSWORD = f.read().strip()
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

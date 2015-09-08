@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 
 # TODO: Improve the model with some GeoPoint fields
@@ -69,7 +71,8 @@ class Route(models.Model):
         (7, 'Funicular')
     ]
     route_id = models.IntegerField(primary_key=True)
-    agency_id = models.ForeignKey(Agency, to_field=Agency.agency_id, blank=True)
+    # in GTFS this is a reference to agence_id. Here it's to the PK of Agency.
+    agency_id = models.ForeignKey(Agency)
     route_short_name = models.CharField(max_length=50)
     route_long_name = models.CharField(max_length=150)
     route_desc = models.CharField(blank=True, max_length=150)
