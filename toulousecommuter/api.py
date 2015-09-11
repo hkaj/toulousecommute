@@ -1,7 +1,6 @@
-from tastypie import Authorization
 from tastypie.resources import ModelResource
 
-from ToulouseCommuter.models import (Agency, Calendar, CalendarDate, Frequency, Route,
+from toulousecommuter.models import (Agency, Calendar, CalendarDate, Frequency, Route,
                                      Shape, Stop, StopTime, Trip)
 
 
@@ -12,7 +11,8 @@ class AgencyResource(ModelResource):
         allowed_methods = ['get']
         filtering = {
             "agency_id": ('exact',),
-            "agency_name": ('exact',),
+            "agency_name": ('exact', 'icontains'),
+            "agency_lang": ('exact',),
         }
 
 
@@ -33,6 +33,7 @@ class CalendarDateResource(ModelResource):
         queryset = CalendarDate.objects.all()
         resource_name = 'calendar_date'
         allowed_methods = ['get']
+        # TODO: add advanced filtering (for human friendly) on exception_type
         filtering = {
             "service_id": ('exact',),
             "date": ('exact',),
@@ -62,8 +63,8 @@ class RouteResource(ModelResource):
             "route_id": ('exact',),
             "agency_id": ('exact',),
             "route_type": ('exact',),
-            "route_long_name": ('exact',),
-            "route_short_name": ('exact',),
+            "route_long_name": ('iexact', 'icontains'),
+            "route_short_name": ('exact', 'icontains'),
         }
 
 
@@ -83,10 +84,12 @@ class StopResource(ModelResource):
         queryset = Stop.objects.all()
         resource_name = 'stop'
         allowed_methods = ['get']
+        # TODO: add advanced filtering on lon and lat for stops around a location
+        # see: https://django-tastypie.readthedocs.org/en/latest/resources.html#advanced-filtering
         filtering = {
             "stop_id": ('exact',),
             "stop_code": ('exact',),
-            "stop_name": ('exact',),
+            "stop_name": ('iexact', 'icontains'),
             "parent_station": ('exact',),
             "location_type": ('exact',),
         }
@@ -105,7 +108,7 @@ class StopTimeResource(ModelResource):
             "departure_time": ('exact',),
             "drop_off_type": ('exact',),
             "pickup_type": ('exact',),
-            "stop_headsign": ('exact',),
+            "stop_headsign": ('iexact', 'icontains'),
         }
 
 
